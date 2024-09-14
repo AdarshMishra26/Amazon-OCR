@@ -1,0 +1,7 @@
+Extracted Text:
+OR OAC cable 85-265v 1oow OHeatsink and chip O12V -1A Power 12V-IA Power Power adapter supply adapter or 6 [ED dive Assembly Display Fan drive D"
+
+Extracted Entities:
+
+Extracted Values:
+voltage: 12V

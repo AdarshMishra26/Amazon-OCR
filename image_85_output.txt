@@ -1,0 +1,7 @@
+Extracted Text:
+CAPACITY WEIGHT 500 LBS
+
+Extracted Entities:
+
+Extracted Values:
+volume: 500 L
