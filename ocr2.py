@@ -1,11 +1,10 @@
 import pandas as pd
 import requests
 from io import BytesIO
+from PIL import Image
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
 import textwrap
-import json
-import os
 
 # Initialize the OCR model
 model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
@@ -14,9 +13,12 @@ def process_image_from_url(image_url):
     try:
         # Download the image
         response = requests.get(image_url)
-        image = BytesIO(response.content)
+        response.raise_for_status()  # Check for HTTP errors
         
-        # Read the image file
+        # Open the image using PIL
+        image = Image.open(BytesIO(response.content)).convert('RGB')
+        
+        # Convert PIL image to DocumentFile
         docs = DocumentFile.from_images(image)
         
         # Perform OCR on the document
