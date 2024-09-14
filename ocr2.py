@@ -7,7 +7,7 @@ from PIL import Image
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
 import textwrap
-
+import tensorflow as tf
 # Initialize the OCR model
 model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
 
@@ -69,7 +69,7 @@ def process_image(image_path):
 # Asynchronous function to download and process images
 async def process_images_from_csv(input_csv, output_csv):
     df = pd.read_csv(input_csv)
-    image_urls = df['images_url'].head(30).tolist()  # Process first 30 images for demonstration
+    image_urls = df['images_url'].head(5000).tolist()  # Process first 30 images for demonstration
     
     async with aiohttp.ClientSession() as session:
         download_tasks = []
@@ -91,6 +91,12 @@ async def process_images_from_csv(input_csv, output_csv):
     results_df.to_csv(output_csv, index=False)
 
 # Example usage
+physical_devices = tf.config.list_physical_devices('GPU')
+
+if physical_devices:
+    print("GPUs detected:", physical_devices)
+else:
+    print("No GPUs detected.")
 input_csv = 'test.csv'
 output_csv = 'ocr_results.csv'
 asyncio.run(process_images_from_csv(input_csv, output_csv))
