@@ -19,7 +19,7 @@ def process_image_from_url(image_url):
         image = Image.open(BytesIO(response.content)).convert('RGB')
         
         # Convert PIL image to DocumentFile
-        docs = DocumentFile.from_images(image)
+        docs = DocumentFile.from_images(image)  # Wrap the image in a list to be compatible with DocumentFile
         
         # Perform OCR on the document
         result = model(docs)
